@@ -1,57 +1,70 @@
 package com.driver;
 
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class OrderService{
-    @Autowired
-    OrderRepository repository;
-    public void addOrder(Order order){
-        repository.addOrder(order);
-    }
-    public void addPartner(String partnerId){
-        repository.addPartner(partnerId);
-    }
-    public void assignPartner(String orderId, String partnerId){
-        repository.assignPartner(orderId, partnerId);
-    }
-    public Order getOrderById(String orderId){ return repository.getOrderById(orderId);}
-    public DeliveryPartner getPartnerById(String partnerId){ return repository.getPartnerById(partnerId);}
-    public Integer getOrderCountByPartnerId(String partnerId){ return repository.getOrderCountByPartnerId(partnerId);}
-    public List<String> getOrdersByPartnerId(String partnerId){
-        return repository.getOrdersByPartnerId(partnerId);
-    }
-    public List<String> getAllOrders(){return repository.getAllOrders();}
-    public Integer getCountOfUnassignedOrders(){return repository.getCountOfUnassignedOrders();}
+public class OrderService {
 
-    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId){
-        String[]str = time.split(":");
-        int currTime = Integer.parseInt(str[0])*60 + Integer.parseInt(str[1]);
-        return repository.getOrdersLeftAfterGivenTimeByPartnerId(currTime, partnerId);
+    // @Autowired
+    OrderRepository orderRepository = new OrderRepository();
+
+    public void addOrder(Order order) {
+        orderRepository.addOrder(order);
     }
 
-    public String getLastDeliveryTimeByPartnerId(String partnerId){
-        int time = repository.getLastDeliveryTimeByPartnerId(partnerId);
+    public void addPartner(String partnerId) {
 
-        String HH = "";
-        String MM = "";
+        //DeliveryPartner deliveryPartner = new DeliveryPartner(partnerId);
+        orderRepository.addPartner(partnerId);
 
-        int hour = time / 60;
-        int minutes = time % 60;
-
-        HH += ((hour > 9) ? hour : "0"+hour);
-        MM += ((minutes > 9) ? minutes : "0"+minutes);
-
-        return HH +":"+MM;
     }
-    public void deletePartnerById(String partnerId){
-        repository.deletePartnerById(partnerId);
+
+    public void addOrderPartnerPair(String orderId, String partnerId) {
+        orderRepository.addOrderPartnerPair(orderId, partnerId);
     }
-    public void deleteOrderById(String orderId){
-        repository.deleteOrderById(orderId);
+
+    public Order getOrderById(String orderId) {
+
+        return orderRepository.getOrderById(orderId);
+    }
+
+    public DeliveryPartner getPartnerById(String partnerId) {
+        return orderRepository.getpartnerById(partnerId);
+    }
+
+    public Integer getOrderCountByPartnerId(String partnerId) {
+        return orderRepository.getOrderCountByPartnerId(partnerId);
+    }
+
+
+    public List<String> getOrderByPartnerId(String partnerId) {
+        return orderRepository.getOrderByParameter(partnerId);
+    }
+
+    public List<String> getAllOrder() {
+        return orderRepository.getAllOrder();
+    }
+
+    public Integer getCountOfUnassignedOrders() {
+        return orderRepository.getCountOfUnassignedOrder();
+    }
+
+    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
+        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(time, partnerId);
+    }
+
+    public String getLastDeliveryTimeByPartnerId(String partnerId) {
+        return orderRepository.getLastDeliveryTimeByPartnerId(partnerId);
+    }
+
+    public void deletePartnerById(String partnerId) {
+        orderRepository.deletePartnerById(partnerId);
+    }
+
+    public void deleteOrderById(String orderId) {
+        orderRepository.deleteOrderById(orderId);
     }
 }
