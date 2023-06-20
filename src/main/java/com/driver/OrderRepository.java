@@ -20,7 +20,7 @@ public class OrderRepository {
         this.orderPartnerPair = new HashMap<>();
 
     }
-    public void addOrder(Order order) throws Exception{
+    public void addOrder(Order order){
         orderMap.put(order.getId(), order);
     }
 

@@ -22,7 +22,7 @@ public class OrderController {
     @Autowired
     OrderService service;
     @PostMapping("/add-order")
-    public ResponseEntity<String> addOrder(@RequestBody Order order) throws Exception {
+    public ResponseEntity<String> addOrder(@RequestBody Order order){
         service.addOrder(order);
         return new ResponseEntity<>("New order added successfully", HttpStatus.CREATED);
     }

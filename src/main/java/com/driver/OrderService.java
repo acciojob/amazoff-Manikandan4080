@@ -10,7 +10,7 @@ import java.util.List;
 public class OrderService{
     @Autowired
     OrderRepository repository;
-    public void addOrder(Order order) throws Exception {
+    public void addOrder(Order order){
         repository.addOrder(order);
     }
     public void addPartner(String partnerId){
